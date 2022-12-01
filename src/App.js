@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import React, { useState, Suspense } from 'react';
 import './App.css';
+// import Comp1 from './Comp1';
+const Comp1 = React.lazy(()=> import('./Comp1'))
+// import Comp2 from './Comp2';
+const Comp2 = React.lazy(()=> import('./Comp2'))
 
 function App() {
+  const [toggle, setToggle] = useState(false)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {toggle && <Suspense fallback={<>Loading C1</>}><Comp1 /></Suspense>}
+      {!toggle && <Suspense fallback={<>Loading C2</>}><Comp2 /></Suspense>}
+      <button onClick={() => {
+        setToggle(!toggle)
+      }}>toggle</button>
     </div>
   );
 }
